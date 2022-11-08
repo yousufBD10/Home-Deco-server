@@ -14,7 +14,7 @@ app.use(express.json());
 
 
 const uri = `mongodb+srv://${process.env.db_users}:${process.env.db_password}@cluster0.fvyg8ej.mongodb.net/?retryWrites=true&w=majority`;
-console.log(uri);
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
@@ -30,6 +30,15 @@ async function run(){
             const blog = await cursor.toArray();
             res.send(blog);
         }); 
+
+        app.get('/blog/:id', async (req,res)=>{
+            const id = req.params.id
+            const query = {_id:ObjectId(id)};
+            const singleBlog = await blogCollection.findOne(query);
+           
+            res.send(singleBlog);
+
+         });
 
 
         app.get('/service', async (req,res)=>{
@@ -55,6 +64,12 @@ async function run(){
          });
 
 
+
+         app.post('/services', async (req,res)=>{
+            const services = req.body;
+            const result = await serviceCollection.insertOne(services);
+            res.send(result);
+         })
 
     }
     catch{
