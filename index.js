@@ -30,6 +30,12 @@ async function run(){
             const service = await cursor.limit(3).toArray();
             res.send(service);
         });
+        app.get('/services', async (req,res)=>{
+            const query = {}
+            const cursor = serviceCollection.find(query);
+            const service = await cursor.toArray();
+            res.send(service);
+        });
 
 
     }
