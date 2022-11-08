@@ -22,6 +22,14 @@ async function run(){
     try{
        //clirnt connect
         const serviceCollection = client.db('homeDeco').collection('services');
+        const blogCollection = client.db('blog').collection('artcle');
+
+        app.get('/blog', async (req,res)=>{
+            const query = {}
+            const cursor = blogCollection.find(query);
+            const blog = await cursor.toArray();
+            res.send(blog);
+        }); 
 
 
         app.get('/service', async (req,res)=>{
