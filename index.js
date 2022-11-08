@@ -23,6 +23,7 @@ async function run(){
        //clirnt connect
         const serviceCollection = client.db('homeDeco').collection('services');
         const blogCollection = client.db('blog').collection('artcle');
+        const reviewCollection = client.db('userReview').collection('review');
 
         app.get('/blog', async (req,res)=>{
             const query = {}
@@ -70,7 +71,21 @@ async function run(){
             const result = await serviceCollection.insertOne(services);
             res.send(result);
          })
+ 
+         app.post('/review', async (req,res)=>{
+            const review = req.body;
+            const result = await reviewCollection.insertOne(review);
+            res.send(result);
+         });
 
+         app.get('/review', async (req,res)=>{
+            const query = {}
+            const cursor = reviewCollection.find(query);
+            const review = await cursor.toArray();
+            res.send(review);
+        });
+
+         
     }
     catch{
         console.error(error)
