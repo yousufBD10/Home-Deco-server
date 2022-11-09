@@ -125,7 +125,7 @@ async function run(){
      
 
         
-        app.get('/myreview', async(req,res)=>{
+        app.get('/review', async(req,res)=>{
           
           
          
